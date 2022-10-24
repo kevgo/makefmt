@@ -21,7 +21,7 @@ lint: tools/actionlint  # checks formatting
 	cargo clippy --all-targets --all-features -- -W clippy::pedantic
 	cargo fmt -- --check
 	git diff --check
-	tools/actionlint
+	# tools/actionlint
 
 ps: fix test  # pitstop
 
