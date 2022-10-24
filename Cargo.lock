@@ -536,6 +536,7 @@ version = "0.1.0"
 dependencies = [
  "cucumber",
  "pretty_assertions",
+ "regex",
  "tempfile",
  "tokio",
 ]

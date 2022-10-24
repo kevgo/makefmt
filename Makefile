@@ -35,6 +35,9 @@ tools/actionlint:
 target/debug/makefmt: $(shell find src)  Cargo.toml Cargo.lock
 	cargo build
 
+unit:  # runs the unit tests
+	cargo test
+
 update:  # updates dependencies
 	cargo upgrade
 
