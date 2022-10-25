@@ -58,6 +58,9 @@ impl Makefile {
             }
             sections.push(Section::TopLevel(line.into()))
         }
+        if let Some(target) = current_target {
+            sections.push(Section::Target(target));
+        }
         Makefile { sections }
     }
 
@@ -125,13 +128,6 @@ pub struct Target {
 #[cfg(test)]
 mod tests {
 
-    mod line {
-        #[test]
-        fn foo() {
-            // TODO
-        }
-    }
-
     mod makefile {
 
         mod parse {
@@ -160,6 +156,21 @@ mod tests {
 
             #[test]
             fn simple_target() {
+                let give = "alpha: beta  # a target\n\techo one\n\techo two\n";
+                let want = Makefile {
+                    sections: vec![Section::Target(Target {
+                        name: "alpha".into(),
+                        deps: vec!["beta".into()],
+                        comment: Some("a target".into()),
+                        commands: vec!["\techo one".into(), "\techo two".into()],
+                    })],
+                };
+                let have = Makefile::parse(give);
+                assert_eq!(have, want);
+            }
+
+            #[test]
+            fn multiple_targets() {
                 let give = "alpha:\n\techo one\n\techo two\n";
                 let want = Makefile {
                     sections: vec![Section::Target(Target {
